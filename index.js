@@ -1,13 +1,28 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits } = require("discord.js");
+const express = require("express");
 
+// --------------------
+// EXPRESS (Render fix)
+// --------------------
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Bot is running");
+});
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Web server running");
+});
+
+// --------------------
+// DISCORD BOT
+// --------------------
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds]
+  intents: [GatewayIntentBits.Guilds]
 });
 
-const TOKEN = process.env.TOKEN;
-
-client.once('ready', () => {
-    console.log(`Bot is online as ${client.user.tag}`);
+client.once("clientReady", () => {
+  console.log(`Bot is online as ${client.user.tag}`);
 });
 
-client.login(TOKEN);
+client.login(process.env.TOKEN);
